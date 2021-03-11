@@ -1,45 +1,37 @@
 package entities;
 
 import exceptions.MessageException;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-
+@Data
 public class Message {
 
-    @Getter
-    @Setter
-    private String message;
-    @Getter
-    @Setter
+    private String content;
     private boolean isRead;
-    @Getter
-    @Setter
-    private User addressee;
-    @Setter
-    private User recipient;
+    private User receiver;
+    private User sender;
 
-    public User getRecipient() {
-        if(recipient == null) {
+    public User getSender() { // in case user doesn't exist
+        if (sender == null) {
             return new User("User removed");
         }
-        return recipient;
+        return sender;
     }
 
-    public Message(String message, boolean isRead, User addressee, User recipient) throws MessageException {
-        if(message == null || message.equals("") || message.equals(" ")) {
+    public Message(String content, boolean isRead, User receiver, User sender) throws MessageException {
+        if (content == null || content.equals("") || content.equals(" ")) {
             throw new MessageException("Message can't be empty");
         }
-        if( addressee == null ) {
+        if (receiver == null) {
             throw new MessageException("Addressee can't be empty");
         }
-        if(recipient == null) {
+        if (sender == null) {
             throw new MessageException("recipient can't be empty");
         }
-        this.message = message;
+        this.content = content;
         this.isRead = isRead;
-        this.addressee = addressee;
-        this.recipient = recipient;
+        this.receiver = receiver;
+        this.sender = sender;
     }
 
 
