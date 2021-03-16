@@ -15,6 +15,8 @@ create table friends
     CONSTRAINT fk_addresser FOREIGN KEY (sender_id) REFERENCES Users (id)
 );
 
+
+
 insert into Users (id, email, password)
 values (0, 'aradiuk@gmail.com', '123456');
 

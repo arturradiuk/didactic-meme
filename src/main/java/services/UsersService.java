@@ -33,14 +33,14 @@ public class UsersService {
     }
 
     public List<Message> getUserMessages(String email) throws RepositoryException {
-        return usersRepository.getUser(email).getMessages();
+
     }
 
     public List<User> getUserFriends(String email) throws RepositoryException {
         return usersRepository.getUser(email).getFriends();
     }
     public void addUserMessage(Message message, String email) throws RepositoryException {
-        usersRepository.getUser(email).getMessages().add(message);
+        usersRepository.getUser(email);
     }
     public void addUserFriend(String user, String friend) throws RepositoryException {
         usersRepository.getUser(user).getFriends().add(usersRepository.getUser(friend));

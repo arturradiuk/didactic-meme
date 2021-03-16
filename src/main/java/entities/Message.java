@@ -7,6 +7,7 @@ import lombok.Data;
 public class Message {
 
     private String content;
+    private String subject;
     private boolean isRead;
     private User receiver;
     private User sender;
