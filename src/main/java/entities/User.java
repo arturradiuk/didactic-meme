@@ -14,7 +14,7 @@ public class User {
     private String email;
     private String password;
     private List<User> friends;
-
+    private AccessLevel accessLevel;
 
     public User(String email, String password) throws UserException {
         if (email == null || email.equals("") || email.equals(" "))
