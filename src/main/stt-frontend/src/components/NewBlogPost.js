@@ -1,8 +1,10 @@
-import React from 'react';
+import React from "react";
 
 const NewBlogPost = (props) => {
-    return(
-        <div style={{margin:"80px"}}><h1>NewBlogPost Page</h1></div>
+    return (
+        <div style={{ margin: "80px" }}>
+            <h1>NewBlogPost Page</h1>
+        </div>
     );
 };
 

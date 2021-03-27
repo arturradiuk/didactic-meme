@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter, Route, Link, Redirect } from "react-router-dom";
-import SpeechRecognition, {
-    useSpeechRecognition,
-} from "react-speech-recognition";
+import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 import Home from "./Home";
 import Blog from "./Blog";
 import Contacts from "./Contacts";
