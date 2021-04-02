@@ -1,4 +1,4 @@
-package org.wzas.didacticmeme.config.jwt;
+package org.wzas.didacticmeme.config.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

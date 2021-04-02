@@ -1,5 +1,6 @@
 package org.wzas.didacticmeme.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ public class MessageEnt {
 
     private String content;
 
-    private boolean read;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Boolean read;
 
 }

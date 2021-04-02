@@ -1,4 +1,4 @@
-package org.wzas.didacticmeme.config.jwt;
+package org.wzas.didacticmeme.config.security.jwt;
 
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,7 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
-import org.wzas.didacticmeme.config.CustomUserDetails;
+import org.wzas.didacticmeme.config.security.CustomUserDetails;
 import org.wzas.didacticmeme.service.CustomUserDetailsService;
 
 import javax.servlet.FilterChain;

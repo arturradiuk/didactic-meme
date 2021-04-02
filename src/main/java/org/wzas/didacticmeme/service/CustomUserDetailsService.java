@@ -1,11 +1,10 @@
 package org.wzas.didacticmeme.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import org.wzas.didacticmeme.config.CustomUserDetails;
+import org.wzas.didacticmeme.config.security.CustomUserDetails;
 import org.wzas.didacticmeme.model.UserEnt;
 import org.wzas.didacticmeme.repository.InMemoryRepository;
 

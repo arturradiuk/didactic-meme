@@ -1,22 +1,18 @@
 package org.wzas.didacticmeme.web.conroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.wzas.didacticmeme.config.jwt.JwtProvider;
+import org.wzas.didacticmeme.config.security.jwt.JwtProvider;
 import org.wzas.didacticmeme.model.UserEnt;
 import org.wzas.didacticmeme.model.auth.AuthRequest;
 import org.wzas.didacticmeme.model.auth.RegistrationRequest;
 import org.wzas.didacticmeme.repository.InMemoryRepository;
 
 import javax.validation.Valid;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 
 
 @RestController

@@ -31,7 +31,15 @@ public class InMemoryRepository {
     }
 
     public List<MessageEnt> getAllSentMessagesForTheEmail(String email) {
-        return this.messageEnts.stream().filter(messageEnt -> messageEnt.getSender().getEmail().equals(email)).collect(Collectors.toList());
+//        this.messageEnts = this.messageEnts.stream().map(messageEnt -> {
+//            messageEnt.setRead(null);
+//            return messageEnt;
+//        }).collect(Collectors.toList());
+        return this.messageEnts.stream().filter(messageEnt -> messageEnt.getSender().getEmail().equals(email)).map(messageEnt -> {
+            messageEnt.setRead(null);
+            return messageEnt;
+        })
+                .collect(Collectors.toList());
     }
 
     public List<MessageEnt> getAllReceivedMessagesForTheEmail(String email) {

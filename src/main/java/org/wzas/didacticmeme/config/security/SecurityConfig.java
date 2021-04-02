@@ -1,4 +1,4 @@
-package org.wzas.didacticmeme.config;
+package org.wzas.didacticmeme.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.wzas.didacticmeme.config.jwt.JwtFilter;
+import org.wzas.didacticmeme.config.security.jwt.JwtFilter;
 
 @Configuration
 @EnableWebSecurity
