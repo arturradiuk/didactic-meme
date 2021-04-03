@@ -7,17 +7,21 @@ import org.springframework.stereotype.Component;
 import org.wzas.didacticmeme.config.security.CustomUserDetails;
 import org.wzas.didacticmeme.model.UserEnt;
 import org.wzas.didacticmeme.repository.InMemoryRepository;
+import org.wzas.didacticmeme.repository.UserRepository;
 
 import java.util.Optional;
 
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
+    //    @Autowired
+//    private InMemoryRepository inMemoryRepository;
     @Autowired
-    private InMemoryRepository inMemoryRepository;
+    private UserRepository userRepository;
 
     @Override
     public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserEnt> user = inMemoryRepository.getUserByEmail(username);
+//        Optional<UserEnt> user = inMemoryRepository.getUserByEmail(username);
+        Optional<UserEnt> user = userRepository.findByEmail(username);
         return CustomUserDetails.fromUserEntToCustomUserDetails(user.orElseThrow(() -> new UsernameNotFoundException("there is no user with such email")));
     }
 }

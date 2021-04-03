@@ -23,11 +23,11 @@ public class InMemoryRepository {
         userEnts = new ArrayList<>();
         messageEnts = new ArrayList<>();
 
-        userEnts.add(new UserEnt("tola@gmail.com", "123456", "tola", AccessLevel.ROLE_USER));
-        userEnts.add(new UserEnt("bob@gmail.com", "123456", "bob", AccessLevel.ROLE_USER));
+        userEnts.add(new UserEnt(0l, "tola@gmail.com", "123456", "tola", AccessLevel.ROLE_USER));
+        userEnts.add(new UserEnt(0l, "bob@gmail.com", "123456", "bob", AccessLevel.ROLE_USER));
 
-        messageEnts.add(new MessageEnt(UUID.randomUUID(), userEnts.get(1), userEnts.get(0), "chat", "Hello Tola", true));
-        messageEnts.add(new MessageEnt(UUID.randomUUID(), userEnts.get(0), userEnts.get(1), "chat", "Hello Bob", true));
+        messageEnts.add(new MessageEnt(0l, UUID.randomUUID(), userEnts.get(1), userEnts.get(0), "chat", "Hello Tola", true));
+        messageEnts.add(new MessageEnt(0l, UUID.randomUUID(), userEnts.get(0), userEnts.get(1), "chat", "Hello Bob", true));
     }
 
     public List<MessageEnt> getAllSentMessagesForTheEmail(String email) {
