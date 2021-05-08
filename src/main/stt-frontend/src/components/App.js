@@ -1,10 +1,14 @@
 import React, { useState } from "react";
-import { BrowserRouter, Route, Link, Redirect } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 import Home from "./Home";
-import Blog from "./Blog";
 import Contacts from "./Contacts";
-import NewBlogPost from "./NewBlogPost";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route
+  } from 'react-router-dom'
 
 function App() {
     const [redirectUrl, setRedirectUrl] = useState("");
@@ -22,51 +26,40 @@ function App() {
         return <div>Sorry but your browser doesn't support speech recognition</div>;
     }
 
-    const pages = ["home", "blog", "new blog post", "contacts"];
+    // const pages = ["login", "home", "blog", "new blog post", "contacts"];
 
-    const urls = {
-        home: "/",
-        blog: "/blog",
-        "new blog post": "/blog/new",
-        contacts: "/contacts",
-    };
+    // const urls = {
+    //     login: "/",
+    //     home: "/home",
+    //     blog: "/blog",
+    //     "new blog post": "/blog/new",
+    //     contacts: "/contacts",
+    // };
 
-    let redirect = "";
+    // let redirect = "";
 
-    if (redirectUrl) {
-        if (pages.includes(redirectUrl)) {
-            redirect = <Redirect to={urls[redirectUrl]} />;
-        } else {
-            redirect = <p>Could not find page: {redirectUrl}</p>;
-        }
-    }
-    const handleKeyPress = (event) => {
-        console.log(event.charCode);
-        if (event.charCode == 83) {
-            SpeechRecognition.startListening();
-        }
-    };
+    // if (redirectUrl) {
+    //     if (pages.includes(redirectUrl)) {
+    //         redirect = <Redirect to={urls[redirectUrl]} />;
+    //     } else {
+    //         redirect = <p>Could not find page: {redirectUrl}</p>;
+    //     }
+    // }
+    // const handleKeyPress = (event) => {
+    //     console.log(event.charCode);
+    //     if (event.charCode == 83) {
+    //         SpeechRecognition.startListening();
+    //     }
+    // };
 
     return (
-        <div className="App" onKeyDown={(event) => handleKeyPress(event)}>
-            <BrowserRouter>
-                <div id="links">
-                    <Link to="/">Home</Link>
-                    <Link to="/blog">Blog</Link>
-                    <Link to="/blog/new">Add Blog Post</Link>
-                    <Link to="/contacts">Contacts</Link>
-                </div>
-                <Route path="/" exact component={Home} />
-                <Route path="/home" component={Home} />
-                <Route path="/blog" exact component={Blog} />
-                <Route path="/blog/new" component={NewBlogPost} />
-                <Route path="/contacts" component={Contacts} />
-
-                {redirect}
-            </BrowserRouter>
-            <p id="transcript"> Transcript: {transcript}</p>
-            <button onClick={SpeechRecognition.startListening}>Start</button>
-        </div>
+      <Router>
+        <Switch>
+          <Route path="/" exact component={SignIn}/>
+          <Route path="/signin" exact component={SignIn}/>
+          <Route path="/signup" exact component={SignUp}/>               
+        </Switch>
+      </Router>
     );
 }
 

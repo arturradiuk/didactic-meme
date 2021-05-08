@@ -1,0 +1,67 @@
+.signin {
+  &__wrapper {
+    @include fillScreen;
+    @include flex;
+  }
+
+  &__card {
+    @include card(0px);
+    @include flex;
+    width: 700px;
+    height: 430px;
+  }
+
+  &__left,
+  &__right {
+    height: 100%;
+    width: 50%;
+  }
+
+  // Left is image side
+  &__left {
+    background: url("../assets/LoginBg.png");
+    background-position: center center;
+  }
+
+  // Here is form side
+  &__right {
+    @include flexCol(center, space-between);
+    box-sizing: border-box;
+    padding: 10px;
+  }
+
+  &__header {
+    @include flex(start);
+    width: 100%;
+    height: 60px;
+  }
+
+  &__header-text {
+    width: 100%;
+    text-align: center;
+    font-size: 3em;
+    font-weight: 700;
+  }
+
+  &__form {
+    @include flex;
+    flex-direction: column;
+  }
+
+  &__input {
+    @include loginInput;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  &__button {
+    @include button;
+    margin-top: 15px;
+  }
+
+  &__link {
+    color: $secondary;
+    text-decoration-color: $secondary;
+    font-style: italic;
+  }
+}

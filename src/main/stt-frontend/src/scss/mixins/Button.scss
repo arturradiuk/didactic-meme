@@ -1,0 +1,15 @@
+@mixin button {
+  padding: 10px;
+  background-color: $primary;
+  color: $onPrimary;
+  transition: background-color .2s ease;
+  cursor: pointer;
+  border-radius: $cornerRadiusSize;
+  text-align: center;
+  min-width: 60px;
+  font-weight: 700;
+
+  &:hover {
+    background-color: $primaryHover;
+  }
+}

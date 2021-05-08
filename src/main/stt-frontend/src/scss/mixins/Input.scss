@@ -1,0 +1,8 @@
+@mixin loginInput {
+  display: block;
+  padding: 8px 9px;
+  outline: none;
+  border: 1px solid $border;
+  border-radius: $cornerRadiusSize;
+  font-size: 1em;
+}
