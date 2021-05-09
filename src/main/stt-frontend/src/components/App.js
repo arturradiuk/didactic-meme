@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import Chat from "./ChatApp";
 import Home from "./Home";
-import Contacts from "./Contacts";
 import {
     BrowserRouter as Router,
     Switch,
@@ -58,6 +58,8 @@ function App() {
           <Route path="/" exact component={SignIn}/>
           <Route path="/signin" exact component={SignIn}/>
           <Route path="/signup" exact component={SignUp}/>               
+          <Route path="/Chat" exact component={Chat}/>   
+          <Route path="/Home" exact component={Home}/>   
         </Switch>
       </Router>
     );
