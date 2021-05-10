@@ -28,5 +28,5 @@ public class UserEnt { // todo unique constraints
     @Enumerated(EnumType.STRING)
     @JsonIgnore
     @Column(name = "access_level")
-    private AccessLevel accessLevel;
+    private AccessLevel accessLevel = AccessLevel.ROLE_USER;
 }

@@ -20,10 +20,13 @@ public class MessageEnt { // todo unique constraints
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
+    @JsonIgnore
     private UUID uuid;
+
     @OneToOne
     @JoinColumn(name = "sender_id")
     private UserEnt sender;
+
     @OneToOne
     @JoinColumn(name = "receiver_id")
     private UserEnt receiver;

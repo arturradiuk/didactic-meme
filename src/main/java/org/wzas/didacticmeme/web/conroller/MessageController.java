@@ -10,6 +10,7 @@ import org.wzas.didacticmeme.service.MessageService;
 import java.security.Principal;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/messages")
 public class MessageController {
