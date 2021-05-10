@@ -1,0 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
+@import "./Variables.scss";
+
+// Mixins
+@import "./mixins/Card.scss";
+@import "./mixins/Input.scss";
+@import "./mixins/Button.scss";
+@import "./mixins/Misc.scss";
+
+// Views styles
+@import "./SignIn.scss";
+@import "./SignUp.scss";
+
+body {
+  margin: 0;
+  color: #1b1b1b;
+  background-color: $bg;
+  font-family: "Lato";
+}

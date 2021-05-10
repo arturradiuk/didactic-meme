@@ -1,0 +1,22 @@
+@mixin fillMaxSize {
+  width: 100%;
+  height: 100%;
+}
+
+@mixin fillScreen {
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+@mixin flex($h: center, $v: center) {
+  display: flex;
+  justify-content: $h;
+  align-items: $v;
+}
+
+@mixin flexCol($h: center, $v: center) {
+  display: flex;
+  flex-direction: column;
+  align-items: $h;
+  justify-content: $v;
+}
