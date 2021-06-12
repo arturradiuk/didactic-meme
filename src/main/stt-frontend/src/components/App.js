@@ -3,6 +3,9 @@ import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognitio
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import Chat from "./ChatApp";
+import Profile from "./ProfileApp";
+import Settings from "./SettingsApp";
+import Info from "./InfoApp";
 import Home from "./Home";
 import {
     BrowserRouter as Router,
@@ -59,7 +62,10 @@ function App() {
           <Route path="/signin" exact component={SignIn}/>
           <Route path="/signup" exact component={SignUp}/>               
           <Route path="/Chat" exact component={Chat}/>   
-          <Route path="/Home" exact component={Home}/>   
+          <Route path="/Home" exact component={Home}/>
+          <Route path="/Profile" exact component={Profile}/>
+          <Route path="/Settings" exact component={Settings}/>
+          <Route path="/Info" exact component={Info}/>
         </Switch>
       </Router>
     );

@@ -1,13 +1,18 @@
 .navigation {
   max-width: 100px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   flex-direction: column;
   padding: 0 25px;
-  padding-top: 30px;
+  padding-top: 3px;
 }
 .navigation img {
   display: block;
   max-width: 100%;
   cursor: pointer;
+}
+.navigationI img {
+    display: block;
+    max-width: 100%;
+    cursor: default;
 }
