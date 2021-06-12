@@ -1,0 +1,7 @@
+.mainInfobody {
+  flex-grow: 1;
+  background-color: #4de3cb;
+  border-radius: 10px;
+  padding: 15px 20px;
+  display: flex;
+}

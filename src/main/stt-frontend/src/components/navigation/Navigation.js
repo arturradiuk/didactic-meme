@@ -15,7 +15,6 @@ export default class Navigation extends Component {
     return (
       <div className="navigation">
         <div className="navigationI">
-
           <img src={logo}></img>
         </div>
         <div className="navigationBlocks">

@@ -1,0 +1,17 @@
+.mainInfocontent {
+  flex-grow: 1;
+  padding: 20px 40px;
+    margin: 0;
+}
+
+.mainInfocontent img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+div.c {
+    text-align: center;
+}
+
+
+

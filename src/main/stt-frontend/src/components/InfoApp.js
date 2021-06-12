@@ -1,14 +1,13 @@
 import React from "react";
 import "./App.css";
 import Navigation from "./navigation/Navigation";
-import ChatBody from "./chatBody/ChatBody";
-
+import InfoBody from "./infoBody/InfoBody";
 
 function InfoApp() {
   return (
     <div className="mainchat">
       <Navigation />
-      <ChatBody />
+      <InfoBody />
     </div>
   );
 }
