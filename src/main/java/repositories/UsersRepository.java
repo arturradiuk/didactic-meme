@@ -12,7 +12,7 @@ public class UsersRepository {
 
 
     public void createUser(String email, String password) throws RepositoryException, UserException {
-        if(userExists(email))
+        if (userExists(email))
             throw new RepositoryException("This user already exists");
 
         User user = new User(email, password);
@@ -21,14 +21,14 @@ public class UsersRepository {
     }
 
     public void addUser(User user) throws RepositoryException {
-        if(userExists(user.getEmail()))
+        if (userExists(user.getEmail()))
             throw new RepositoryException("This user already exists");
 
         users.add(user);
     }
 
     public void removeUser(String email) throws RepositoryException {
-        if(!userExists(email))
+        if (!userExists(email))
             throw new RepositoryException("This user doesn't exists");
 
         users.remove(getUser(email));
@@ -36,8 +36,8 @@ public class UsersRepository {
     }
 
     public User getUser(String email) throws RepositoryException {
-        for (User u:users) {
-            if(u.getEmail().equals(email))
+        for (User u : users) {
+            if (u.getEmail().equals(email))
                 return u;
         }
         throw new RepositoryException("This user doesn't exists");
@@ -48,8 +48,8 @@ public class UsersRepository {
     }
 
     public boolean userExists(String email) {
-        for (User u:users) {
-            if(u.getEmail().equals(email))
+        for (User u : users) {
+            if (u.getEmail().equals(email))
                 return true;
         }
         return false;

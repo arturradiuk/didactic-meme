@@ -10,7 +10,7 @@ export default class Profile extends Component {
       <div className="mainProfile">
         <div className="profileCard userPImage">
           <div className="profileImage">
-            <img src="https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg" />
+            <img src="https://lirp.cdn-website.com/f95a9d1b/dms3rep/multi/opt/BlankProfilePic-494w.png" />
           </div>
           <h4>Imie Nazwisko Uzytkownika</h4>
           <p>Cos o nim</p>

@@ -33,6 +33,7 @@ export class SignIn extends React.Component {
                 'Content-Type': 'application/json'
             }
         }).then(response => {
+            window.localStorage.setItem('token', response.data)
             window.location.href = '/Chat'
         }).catch(error => {
             window.alert("Invalid credentials, please try again")
