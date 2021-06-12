@@ -3,16 +3,20 @@ package org.wzas.didacticmeme.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
-
 @Entity(name = "messages")
 public class MessageEnt { // todo unique constraints
     @JsonIgnore
@@ -21,6 +25,7 @@ public class MessageEnt { // todo unique constraints
     private Long id;
 
     @JsonIgnore
+    @Column(unique = true)
     private UUID uuid;
 
     @OneToOne
@@ -31,11 +36,20 @@ public class MessageEnt { // todo unique constraints
     @JoinColumn(name = "receiver_id")
     private UserEnt receiver;
 
-    private String subject;
-
     private String content;
+
+    private LocalDateTime sentTime;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean read;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        MessageEnt that = (MessageEnt) o;
+
+        return Objects.equals(id, that.id);
+    }
 
 }

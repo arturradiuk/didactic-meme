@@ -34,6 +34,7 @@ export class SignIn extends React.Component {
             }
         }).then(response => {
             window.localStorage.setItem('token', response.data)
+            window.localStorage.setItem('currentUser', json.login)
             window.location.href = '/Chat'
         }).catch(error => {
             window.alert("Invalid credentials, please try again")

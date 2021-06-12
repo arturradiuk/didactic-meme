@@ -20,4 +20,8 @@ public interface MessageRepository extends JpaRepository<MessageEnt, Long> {
 
     @Query("FROM messages WHERE uuid = :uuid")
     Optional<MessageEnt> findDistinctFirstByUuid(UUID uuid);
+
+    List<MessageEnt> findAllByReceiver_UserNameAndSender_UserName(String receiverName, String senderName);
+
+    List<MessageEnt> findAllBySender_UserNameAndReceiver_UserName(String senderName, String receiverName);
 }

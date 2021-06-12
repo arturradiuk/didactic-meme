@@ -4,50 +4,61 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.wzas.didacticmeme.model.MessageEnt;
-import org.wzas.didacticmeme.repository.InMemoryRepository;
 import org.wzas.didacticmeme.service.MessageService;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/messages")
 public class MessageController {
-//    @Autowired
-//    private InMemoryRepository repository;
+
+    private final MessageService messageService;
 
     @Autowired
-    private MessageService messageService;
+    public MessageController(MessageService messageService) {
+        this.messageService = messageService;
+    }
+
+    @GetMapping("/exchanged/_self/{user-name}")
+    public ResponseEntity<List<MessageEnt>> getExchangedMessages(Principal principal, @PathVariable("user-name") String userName) {
+        List<MessageEnt> messages = messageService.findAllExchangedMessages(principal.getName(), userName);
+        return ResponseEntity.ok(messages);
+    }
 
     @GetMapping("/received/_self")
     public ResponseEntity<List<MessageEnt>> getAllReceivedMessages(Principal principal) {
-//        final List<MessageEnt> messageEnts = this.repository.getAllReceivedMessagesForTheEmail(principal.getName());
         final List<MessageEnt> messageEnts = this.messageService.findAllReceivedMessagesForTheEmail(principal.getName());
-        return ResponseEntity.ok().body(messageEnts);
+        return ResponseEntity.ok(messageEnts);
+    }
+
+    @GetMapping("/received/_self/{user-name}")
+    public ResponseEntity<List<MessageEnt>> getReceivedMessagesFromUser(Principal principal, @PathVariable("user-name") String userName) {
+        List<MessageEnt> messages = messageService.findAllReceivedMessagesForTheEmail(principal.getName()).stream()
+                .filter(messageEnt -> messageEnt.getSender().getUserName().equals(userName))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(messages);
     }
 
     @GetMapping("/sent/_self")
     public ResponseEntity<List<MessageEnt>> getAllSentMessages(Principal principal) {
-//        final List<MessageEnt> messageEnts = this.repository.getAllSentMessagesForTheEmail(principal.getName());
         final List<MessageEnt> messageEnts = this.messageService.findAllSentMessagesForTheEmail(principal.getName());
-        return ResponseEntity.ok().body(messageEnts);
+        return ResponseEntity.ok(messageEnts);
     }
 
     @PostMapping("/send")
-    public ResponseEntity sendNewMessage(@RequestBody MessageEnt messageEnt, Principal principal) {
-        if (!messageEnt.getSender().getEmail().equals(principal.getName())) { // in case someone will be cheating
+    public ResponseEntity<Void> sendNewMessage(@RequestBody MessageEnt messageEnt, Principal principal) {
+        if (!messageEnt.getSender().getEmail().equals(principal.getName())) {
             return ResponseEntity.status(403).build();
         }
         this.messageService.sendNewMessage(messageEnt);
-//        this.repository.createNewMessage(messageEnt);
-//        this.repository.createNewMessage(messageEnt);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/read/{messageId}")
-    public ResponseEntity updateMessageStatusToRead(@PathVariable String messageId, Principal principal) {
-//        this.repository.changeStatusToTheMessage(messageId, principal.getName());
+    public ResponseEntity<Void> updateMessageStatusToRead(@PathVariable String messageId, Principal principal) {
         this.messageService.updateMessageReadStatus(messageId, principal.getName());
         return ResponseEntity.ok().build();
     }

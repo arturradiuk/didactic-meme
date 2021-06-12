@@ -8,7 +8,6 @@ import org.wzas.didacticmeme.repository.MessageRepository;
 import org.wzas.didacticmeme.repository.UserRepository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -30,6 +29,14 @@ public class MessageService {
     public List<MessageEnt> findAllReceivedMessagesForTheEmail(String email) {
         UserEnt user = userRepository.findByEmail(email).get();
         return messageRepository.findAllByReceiverId(user.getId());
+    }
+
+    public List<MessageEnt> findAllExchangedMessages(String currentUserEmail, String userName) {
+        UserEnt currentUser = userRepository.findByEmail(currentUserEmail).get();
+
+        List<MessageEnt> messages = messageRepository.findAllByReceiver_UserNameAndSender_UserName(currentUser.getUserName(), userName);
+        messages.addAll(messageRepository.findAllBySender_UserNameAndReceiver_UserName(currentUser.getUserName(), userName));
+        return messages;
     }
 
     public void sendNewMessage(MessageEnt messageEnt) {

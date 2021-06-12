@@ -1,13 +1,13 @@
 package org.wzas.didacticmeme.repository;
 
 import com.google.common.hash.Hashing;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import org.wzas.didacticmeme.model.AccessLevel;
 import org.wzas.didacticmeme.model.MessageEnt;
 import org.wzas.didacticmeme.model.UserEnt;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,11 +23,11 @@ public class InMemoryRepository {
         userEnts = new ArrayList<>();
         messageEnts = new ArrayList<>();
 
-        userEnts.add(new UserEnt(0l, "tola@gmail.com", "123456", "tola", AccessLevel.ROLE_USER));
-        userEnts.add(new UserEnt(0l, "bob@gmail.com", "123456", "bob", AccessLevel.ROLE_USER));
+        userEnts.add(new UserEnt(0L, "tola@gmail.com", "123456", "tola", AccessLevel.ROLE_USER));
+        userEnts.add(new UserEnt(1L, "bob@gmail.com", "123456", "bob", AccessLevel.ROLE_USER));
 
-        messageEnts.add(new MessageEnt(0l, UUID.randomUUID(), userEnts.get(1), userEnts.get(0), "chat", "Hello Tola", true));
-        messageEnts.add(new MessageEnt(0l, UUID.randomUUID(), userEnts.get(0), userEnts.get(1), "chat", "Hello Bob", true));
+        messageEnts.add(new MessageEnt(0L, UUID.randomUUID(), userEnts.get(1), userEnts.get(0), "Hello Tola", LocalDateTime.now(), true));
+        messageEnts.add(new MessageEnt(1L, UUID.randomUUID(), userEnts.get(0), userEnts.get(1), "Hello Bob", LocalDateTime.now(), true));
     }
 
     public List<MessageEnt> getAllSentMessagesForTheEmail(String email) {
