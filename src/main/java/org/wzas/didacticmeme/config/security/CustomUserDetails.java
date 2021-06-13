@@ -15,7 +15,7 @@ public class CustomUserDetails implements UserDetails {
 
     public static CustomUserDetails fromUserEntToCustomUserDetails(UserEnt userEnt) {
         CustomUserDetails cud = new CustomUserDetails();
-        cud.login = userEnt.getEmail();
+        cud.login = userEnt.getUserName();
         cud.password = userEnt.getPassword();
         cud.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(userEnt.getAccessLevel().toString()));
         return cud;
