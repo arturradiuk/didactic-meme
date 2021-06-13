@@ -41,69 +41,71 @@ export default class ChatContent extends Component {
 
     async loadMessages(chatItems) {
 
-        const authHeader = {'Authorization': `Bearer ${window.localStorage.getItem('token')}`};
-        console.log(authHeader);
+        const initialSize = chatItems.length;
+        let scrollDown = false;
 
         await axios.get("http://localhost:8080/api/messages/exchanged/_self/pawel", {
             headers: {
-                'Authorization': `Bearer ${window.localStorage.getItem('token')}`
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         }).then(response => {
-            // console.log(response.data);
-            console.log(`chat contents: ${chatItems}`);
+            chatItems.length = 0;
             for (const dataElement of response.data) {
-                console.log(dataElement);
                 chatItems.push({
                     image: "",
-                    type: dataElement.receiver.userName === localStorage.getItem('currentUser') ? "" : "other",
+                    type: dataElement.sender.userName === localStorage.getItem('currentUser') ? "" : "other",
                     msg: dataElement.content,
                     time: dataElement.sentTime
                 });
-                console.log(chatItems);
             }
             chatItems.sort((a, b) => Date.parse(a.time) - Date.parse(b.time));
+
+            if (chatItems.length > initialSize) {
+                scrollDown = true;
+            }
         }).catch(error => {
             window.alert('error');
         });
 
+        console.log('refreshing');
         this.forceUpdate();
+        if (scrollDown) {
+            this.scrollToBottom();
+        }
+        setTimeout(() => this.loadMessages(chatItems), 1000);
     }
 
     async componentDidMount() {
 
         await this.loadMessages(this.chatItms);
-        //     await axios.get('http://localhost:8080/api/messages/received/_self', {
-        //         headers: {
-        //             'Authorization': `Bearer ${window.localStorage.getItem('token')}`
-        //         }
-        //     }).then(response => {
-        //         for (const dataElement of response.data) {
-        //             this.state.chat.push({
-        //                 key: 123,
-        //                 image: "",
-        //                 type: "",
-        //                 msg: dataElement.content
-        //             });
-        //         }
-        //     }).catch(error => {
-        //         window.alert('error');
-        //     });
-        // }
-
 
         window.addEventListener("keydown", (e) => {
             if (e.keyCode == 13) {
                 if (this.state.msg != "") {
-                    this.chatItms.push({
-                        key: 1,
-                        type: "",
-                        msg: this.state.msg,
-                        image:
-                            "https://lirp.cdn-website.com/f95a9d1b/dms3rep/multi/opt/BlankProfilePic-494w.png",
+                    console.log("They clicked me!");
+                    // this.chatItms.push({
+                    //     key: 1,
+                    //     type: "",
+                    //     msg: this.state.msg,
+                    //     image:
+                    //         "https://lirp.cdn-website.com/f95a9d1b/dms3rep/multi/opt/BlankProfilePic-494w.png",
+                    // });
+                    // this.scrollToBottom();
+                    // this.forceUpdate();
+                    const message = this.state.msg;
+                    this.state.msg = '';
+                    const json =
+                        {
+                            "receiver": "pawel",
+                            "content": message
+                        };
+                    axios.post('http://localhost:8080/api/messages/send', json, {
+                        headers:
+                            {
+                                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                            }
                     });
-                    this.setState({chat: [...this.chatItms]});
-                    this.scrollToBottom();
-                    this.setState({msg: ""});
+                    this.forceUpdate()
                 }
             }
         });
@@ -111,6 +113,7 @@ export default class ChatContent extends Component {
     }
 
     onStateChange = (e) => {
+        console.log("Hi I'm here");
         this.setState({msg: e.target.value});
     };
 
@@ -140,14 +143,16 @@ export default class ChatContent extends Component {
                     <div className="chat__items">
                         {
                             this.state.chat.map((itm, index) => {
-                                console.log(itm);
+
+                                const time = new Date(Date.parse(itm.time));
+                                const timeString = `${time.getHours()}:${time.getMinutes()}`;
                                 return (
                                     <ChatItem
                                         animationDelay={index + 2}
                                         user={itm.type ? itm.type : "me"}
                                         msg={itm.msg}
                                         image={itm.image}
-                                        time={itm.time}
+                                        time={timeString}
                                     />
                                 );
                             })
