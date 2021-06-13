@@ -30,13 +30,13 @@ public class MessageController {
 
     @GetMapping("/received/_self")
     public ResponseEntity<List<MessageEnt>> getAllReceivedMessages(Principal principal) {
-        final List<MessageEnt> messageEnts = this.messageService.findAllReceivedMessagesForTheEmail(principal.getName());
+        final List<MessageEnt> messageEnts = this.messageService.findAllReceivedMessagesForUserName(principal.getName());
         return ResponseEntity.ok(messageEnts);
     }
 
     @GetMapping("/received/_self/{user-name}")
     public ResponseEntity<List<MessageEnt>> getReceivedMessagesFromUser(Principal principal, @PathVariable("user-name") String userName) {
-        List<MessageEnt> messages = messageService.findAllReceivedMessagesForTheEmail(principal.getName()).stream()
+        List<MessageEnt> messages = messageService.findAllReceivedMessagesForUserName(principal.getName()).stream()
                 .filter(messageEnt -> messageEnt.getSender().getUserName().equals(userName))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(messages);
@@ -44,7 +44,7 @@ public class MessageController {
 
     @GetMapping("/sent/_self")
     public ResponseEntity<List<MessageEnt>> getAllSentMessages(Principal principal) {
-        final List<MessageEnt> messageEnts = this.messageService.findAllSentMessagesForTheEmail(principal.getName());
+        final List<MessageEnt> messageEnts = this.messageService.findAllSentMessagesForUserName(principal.getName());
         return ResponseEntity.ok(messageEnts);
     }
 

@@ -19,29 +19,27 @@ public class MessageService {
     @Autowired
     private MessageRepository messageRepository;
 
-    public List<MessageEnt> findAllSentMessagesForTheEmail(String email) {
-        UserEnt user = userRepository.findByEmail(email).get();
+    public List<MessageEnt> findAllSentMessagesForUserName(String name) {
+        UserEnt user = userRepository.findByUserName(name).get();
         return messageRepository.findAllBySenderId(user.getId()).stream().map(messageEnt -> { // to hide read status
             messageEnt.setRead(null);
             return messageEnt;
         }).collect(Collectors.toList());
     }
 
-    public List<MessageEnt> findAllReceivedMessagesForTheEmail(String email) {
-        UserEnt user = userRepository.findByEmail(email).get();
+    public List<MessageEnt> findAllReceivedMessagesForUserName(String name) {
+        UserEnt user = userRepository.findByUserName(name).get();
         return messageRepository.findAllByReceiverId(user.getId());
     }
 
-    public List<MessageEnt> findAllExchangedMessages(String currentUserEmail, String userName) {
-        UserEnt currentUser = userRepository.findByEmail(currentUserEmail).get();
-
-        List<MessageEnt> messages = messageRepository.findAllByReceiver_UserNameAndSender_UserName(currentUser.getUserName(), userName);
-        messages.addAll(messageRepository.findAllBySender_UserNameAndReceiver_UserName(currentUser.getUserName(), userName));
+    public List<MessageEnt> findAllExchangedMessages(String currentUsername, String userName) {
+        List<MessageEnt> messages = messageRepository.findAllByReceiver_UserNameAndSender_UserName(currentUsername, userName);
+        messages.addAll(messageRepository.findAllBySender_UserNameAndReceiver_UserName(currentUsername, userName));
         return messages;
     }
 
-    public void sendNewMessage(String userEmail, String receiverName, String content) {
-        UserEnt sender = userRepository.findByEmail(userEmail).get();
+    public void sendNewMessage(String userName, String receiverName, String content) {
+        UserEnt sender = userRepository.findByUserName(userName).get();
         UserEnt receiver = userRepository.findByUserName(receiverName).get();
         MessageEnt messageEnt = new MessageEnt(sender, receiver, content, LocalDateTime.now());
         messageRepository.save(messageEnt);

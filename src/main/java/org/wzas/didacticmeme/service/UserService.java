@@ -34,11 +34,17 @@ public class UserService {
         return this.userRepository.findByUserName(name).get();
     }
 
-    public List<String> getAllOtherUsernames(String currentUserEmail) {
-        UserEnt currentUser = userRepository.findByEmail(currentUserEmail).get();
+    public UserEnt changeEmail(String userName, String newEmail) {
+        UserEnt currentUser = userRepository.findByUserName(userName).get();
+        currentUser.setEmail(newEmail);
+        userRepository.saveAndFlush(currentUser);
+        return currentUser;
+    }
+
+    public List<String> getAllOtherUsernames(String currentUserName) {
         return userRepository.findAll().stream()
                 .map(UserEnt::getUserName)
-                .filter(userName -> !userName.equals(currentUser.getUserName()))
+                .filter(userName -> !userName.equals(currentUserName))
                 .collect(Collectors.toList());
     }
 

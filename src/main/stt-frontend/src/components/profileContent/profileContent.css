@@ -1,6 +1,6 @@
 .mainProfilecontent {
   flex-grow: 1;
-  padding: 20px 40px;
+  padding: 40px 40px;
     margin: 0;
 }
 
@@ -9,8 +9,18 @@
     margin-left: auto;
     margin-right: auto;
 }
-div.c {
+.mainProfilecontent div.c {
     text-align: center;
+}
+.mainProfilecontent div h1 {
+    font-weight: bold;
+    color: #fff;
+    font-size: 45px;
+}
+
+.mainProfilecontent div h2 {
+    color: #f64242;
+    font-size: 35px;
 }
 
 
