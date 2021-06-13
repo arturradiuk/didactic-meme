@@ -6,7 +6,6 @@ body {
   height: 100%;
 }
 #root {
-  background-color: #e75b5b;
   display: flex;
   justify-content: center;
   align-items: center;
