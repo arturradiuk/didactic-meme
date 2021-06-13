@@ -1,5 +1,5 @@
 import React from "react";
-import {Link, Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 import axios from "axios";
 
 export class SignIn extends React.Component {
@@ -22,6 +22,21 @@ export class SignIn extends React.Component {
         this.setState({password: event.target.value});
     }
 
+    async getYourChatList() {
+
+        const token = localStorage.getItem('token');
+        console.log('get your chat list')
+
+        return await axios.get(`http://localhost:8080/api/users/_self/chat-names`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(res => {
+            console.log(res.data)
+            sessionStorage.setItem("chatList", JSON.stringify(res.data))
+        })
+    }
+
     async loginRequest() {
         const json = {
             "login": this.state.login,
@@ -35,6 +50,7 @@ export class SignIn extends React.Component {
         }).then(response => {
             localStorage.setItem('token', response.data)
             localStorage.setItem('currentUser', json.login)
+            this.getYourChatList()
             window.location.href = '/Chat'
         }).catch(error => {
             window.alert("Invalid credentials, please try again")

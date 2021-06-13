@@ -43,8 +43,9 @@ export default class ChatContent extends Component {
 
         const initialSize = chatItems.length;
         let scrollDown = false;
-
-        await axios.get("http://localhost:8080/api/messages/exchanged/_self/pawel", {
+        const chatUser = JSON.parse(sessionStorage.getItem('chatConf'));
+        console.log(chatUser);
+        await axios.get(`http://localhost:8080/api/messages/exchanged/_self/${chatUser}`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
@@ -96,7 +97,7 @@ export default class ChatContent extends Component {
                     this.state.msg = '';
                     const json =
                         {
-                            "receiver": "pawel",
+                            "receiver": JSON.parse(sessionStorage.getItem('chatConf')),
                             "content": message
                         };
                     axios.post('http://localhost:8080/api/messages/send', json, {
@@ -105,7 +106,7 @@ export default class ChatContent extends Component {
                                 'Authorization': `Bearer ${localStorage.getItem('token')}`
                             }
                     });
-                    this.forceUpdate()
+                    this.forceUpdate();
                 }
             }
         });
@@ -127,7 +128,7 @@ export default class ChatContent extends Component {
                                 isOnline="active"
                                 image="https://lirp.cdn-website.com/f95a9d1b/dms3rep/multi/opt/BlankProfilePic-494w.png"
                             />
-                            <p>chat title</p>
+                            <p>{JSON.parse(sessionStorage.getItem('chatConf'))}</p>
                         </div>
                     </div>
 

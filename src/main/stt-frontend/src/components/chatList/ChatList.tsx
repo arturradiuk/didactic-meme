@@ -15,10 +15,10 @@ const useRowStyles = makeStyles({
 
 
 function createData(
-    login: string,
+        userName: string,
 ) {
     return {
-        login: login,
+        userName: userName,
     };
 }
 
@@ -35,9 +35,7 @@ function Row(props: RowProps) {
     const classes = useRowStyles();
 
     const handleYourChatConf = async () => {
-        getYourChatConf(row.login).then(res => {
-            sessionStorage.setItem("chatList", JSON.stringify(res.data));
-        });
+            sessionStorage.setItem("chatConf", JSON.stringify(row));
     }
         return(
                 <TableRow className={classes.root}  onClick={() =>{
@@ -45,7 +43,7 @@ function Row(props: RowProps) {
                 }
                 }>
                     <TableCell component="th" scope="row" style={style}>
-                        {row.login}
+                        {row}
                     </TableCell>
 {/*                    <th style={style}>{row.firstName}</TableCell>
                     <TableCell style={style}>{row.secondName}</TableCell>
@@ -56,18 +54,18 @@ function Row(props: RowProps) {
                 </TableRow>
         );
 }
-    function getYourChatList(){
+    async function getYourChatList(){
 
         const token = localStorage.getItem('token');
 
-        return axios.get(`http://localhost:3000/Chat/Lista`, {
+        return await axios.get(`http://localhost:8080/api/users/_self/chat-names`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         })
     }
 
-    function getYourChatConf(login: string){
+    function getYourChatConf(row: string){
         const token = localStorage.getItem('token');
 
         return axios.get(`http://localhost:3000/Chat/Conf`, {
@@ -81,19 +79,15 @@ function Row(props: RowProps) {
 export default function ChatList() {
 
     const chatList = JSON.parse(sessionStorage.getItem("chatList") as string)
+    const chatConf = JSON.parse(sessionStorage.getItem("chatConf") as string)
+
     const [users, setUsers] = useState([]);
     const [user, setUser] = useState([]);
     const [searchInput, setSearchInput] = useState("");
     const handleChange = () => {
-        return setUser(chatList.login);
+        return setUser(chatConf);
     }
- /*   const getYourChatLista = () => {
-        return getYourChatList().then(res => {
-            setUsers(res.data)
-            /!*        }).catch(error => {
-                        const message = error.response.data*!/
-        })
-    }*/
+
     const getYourChatLista = () => {
         return getYourChatList().then(res => {
             setUsers(res.data)
@@ -102,19 +96,21 @@ export default function ChatList() {
 
     useEffect(() => {
         getYourChatList().then(res => {
+            sessionStorage.setItem("chatList", JSON.stringify(res.data));
             setUsers(res.data)
-            setUser(chatList.login);
+            // setUser(chatConf.userName);
         })
     }, []);
 
     function search(rows: any[]) {
+        console.log(rows)
         if (Array.isArray(rows) && rows.length) {
             const filteredAccount = rows.filter(
-                    row => row.props.row.login.toLowerCase().indexOf(searchInput.toLowerCase()) > -1
+                    row => row.props.row.toLowerCase().indexOf(searchInput.toLowerCase()) > -1
             );
 
-            filteredAccount.forEach(account => (accounts.includes(account.props.row.login) ?
-                    "" : accounts.push(account.props.row.login)));
+            filteredAccount.forEach(account => (accounts.includes(account.props.row) ?
+                    "" : accounts.push(account.props.row)));
             return filteredAccount
         } else {
             return rows;
@@ -122,6 +118,7 @@ export default function ChatList() {
     }
 
     const accounts: String[] = [];
+    console.log(users)
 
     return (
             <div>
@@ -142,7 +139,7 @@ export default function ChatList() {
                 <table>
                     <tr>Rozmowy</tr>
                     {search(users.map((user, index) => (
-                            <Row key={index} row={user} /*onChange={handleChange}*/ style={{
+                            <Row key={index} row={user} style={{
                                 backgroundColor:  `var(--${'dark-light'}`,
                                 color: `var(--${'white'}`
                             }} onChange={getYourChatLista}/>

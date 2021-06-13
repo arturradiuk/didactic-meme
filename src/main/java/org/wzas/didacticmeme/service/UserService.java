@@ -6,6 +6,9 @@ import org.wzas.didacticmeme.model.UserEnt;
 import org.wzas.didacticmeme.model.auth.AuthRequest;
 import org.wzas.didacticmeme.repository.UserRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class UserService {
     private final UserRepository userRepository;
@@ -26,4 +29,13 @@ public class UserService {
     public UserEnt findUserByEmail(String email) {
         return this.userRepository.findByEmail(email).get();
     }
+
+    public List<String> getAllOtherUsernames(String currentUserEmail) {
+        UserEnt currentUser = userRepository.findByEmail(currentUserEmail).get();
+        return userRepository.findAll().stream()
+                .map(UserEnt::getUserName)
+                .filter(userName -> !userName.equals(currentUser.getUserName()))
+                .collect(Collectors.toList());
+    }
+
 }
