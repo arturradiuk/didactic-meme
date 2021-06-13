@@ -7,6 +7,7 @@ import org.wzas.didacticmeme.model.UserEnt;
 import org.wzas.didacticmeme.repository.MessageRepository;
 import org.wzas.didacticmeme.repository.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -39,13 +40,10 @@ public class MessageService {
         return messages;
     }
 
-    public void sendNewMessage(MessageEnt messageEnt) {
-        UserEnt sender = userRepository.findByEmail(messageEnt.getSender().getEmail()).get(); // todo
-        UserEnt receiver = userRepository.findByEmail(messageEnt.getReceiver().getEmail()).get(); // todo
-        messageEnt.setSender(sender);
-        messageEnt.setReceiver(receiver);
-        messageEnt.setUuid(UUID.randomUUID()); // todo add jpa unique constraint
-        messageEnt.setRead(false); // todo create dto and remove this field
+    public void sendNewMessage(String userEmail, String receiverName, String content) {
+        UserEnt sender = userRepository.findByEmail(userEmail).get();
+        UserEnt receiver = userRepository.findByUserName(receiverName).get();
+        MessageEnt messageEnt = new MessageEnt(sender, receiver, content, LocalDateTime.now());
         messageRepository.save(messageEnt);
     }
 

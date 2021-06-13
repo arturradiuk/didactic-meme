@@ -3,6 +3,7 @@ package org.wzas.didacticmeme.web.conroller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.wzas.didacticmeme.dto.SendMessageDto;
 import org.wzas.didacticmeme.model.MessageEnt;
 import org.wzas.didacticmeme.service.MessageService;
 
@@ -10,7 +11,6 @@ import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/messages")
 public class MessageController {
@@ -49,11 +49,8 @@ public class MessageController {
     }
 
     @PostMapping("/send")
-    public ResponseEntity<Void> sendNewMessage(@RequestBody MessageEnt messageEnt, Principal principal) {
-        if (!messageEnt.getSender().getEmail().equals(principal.getName())) {
-            return ResponseEntity.status(403).build();
-        }
-        this.messageService.sendNewMessage(messageEnt);
+    public ResponseEntity<Void> sendNewMessage(@RequestBody SendMessageDto message, Principal principal) {
+        this.messageService.sendNewMessage(principal.getName(), message.getReceiver(), message.getContent());
         return ResponseEntity.ok().build();
     }
 
