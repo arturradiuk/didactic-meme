@@ -34,10 +34,11 @@ function Row(props: RowProps) {
      const {style} = props;
     const classes = useRowStyles();
 
-    const handleYourChatConf = async () =>  {
+    const handleYourChatConf = async () => {
         getYourChatConf(row.login).then(res => {
-                sessionStorage.setItem("chatList", JSON.stringify(res.data));
-    });
+            sessionStorage.setItem("chatList", JSON.stringify(res.data));
+        });
+    }
         return(
                 <TableRow className={classes.root}  onClick={() =>{
                     handleYourChatConf();
@@ -54,8 +55,6 @@ function Row(props: RowProps) {
                     <TableCell style={style}>{row.companyPhoneNumber}</TableCell>*/}
                 </TableRow>
         );
-}
-
 }
     function getYourChatList(){
 
