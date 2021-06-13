@@ -1,14 +1,14 @@
 import React from "react";
 import "./App.css";
 import Navigation from "./navigation/Navigation";
-import ChatBody from "./chatBody/ChatBody";
+import SettingsBody from "./settingsBody/SettingsBody";
 
 
 function SettingsApp() {
   return (
     <div className="mainchat">
       <Navigation />
-      <ChatBody />
+      <SettingsBody />
     </div>
   );
 }

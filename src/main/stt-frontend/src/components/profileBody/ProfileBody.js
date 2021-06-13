@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import "./profileBody.css";
-import ChatList from "../chatList/ChatList";
-import ChatContent from "../chatContent/ChatContent";
-import Profile from "../profile/Profile";
+
+import ProfileContent from "../profileContent/ProfileContent"
 
 export default class ProfileBody extends Component {
   render() {
     return (
       <div className="mainProfilebody">
-        <ChatList />
-        <Profile />
+        <ProfileContent />
       </div>
     );
   }
