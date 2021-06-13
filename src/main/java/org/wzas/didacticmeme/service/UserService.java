@@ -30,6 +30,10 @@ public class UserService {
         return this.userRepository.findByEmail(email).get();
     }
 
+    public UserEnt findUserByName(String name) {
+        return this.userRepository.findByUserName(name).get();
+    }
+
     public List<String> getAllOtherUsernames(String currentUserEmail) {
         UserEnt currentUser = userRepository.findByEmail(currentUserEmail).get();
         return userRepository.findAll().stream()

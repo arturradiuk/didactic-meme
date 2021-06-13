@@ -31,4 +31,10 @@ public class UserController {
         List<String> allUsernames = userService.getAllOtherUsernames(principal.getName());
         return ResponseEntity.ok(allUsernames);
     }
+
+    @GetMapping("/_self/profile")
+    public ResponseEntity<UserEnt> getUserData(Principal principal) {
+        UserEnt userData = userService.findUserByName(principal.getName());
+        return ResponseEntity.ok(userData);
+    }
 }

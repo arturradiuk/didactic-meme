@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import "./chatList.css";
-import ChatListItems from "./ChatListItems";
 import axios from "axios";
 import Autocomplete, {createFilterOptions} from '@material-ui/lab/Autocomplete';
 import {TableRow, TextField, makeStyles, TableCell} from "@material-ui/core";
+import Avatar from "./Avatar";
 
 const useRowStyles = makeStyles({
     root: {
@@ -16,9 +16,13 @@ const useRowStyles = makeStyles({
 
 function createData(
         userName: string,
+        active: boolean,
+        aDelay: number,
 ) {
     return {
         userName: userName,
+        active:active,
+        aDelay: aDelay,
     };
 }
 
@@ -28,30 +32,41 @@ export interface RowProps {
         onChange: () => Promise<any>,
 }
 
-function Row(props: RowProps) {
+function Row(this: any, props: RowProps) {
 
     const {row} = props;
-     const {style} = props;
+    const {style} = props;
     const classes = useRowStyles();
 
     const handleYourChatConf = async () => {
             sessionStorage.setItem("chatConf", JSON.stringify(row));
     }
+
+    const selectChat = (e: any) => {
+        for (
+                let index = 0;
+                index < e.currentTarget.parentNode.children.length;
+                index++
+        ) {
+            e.currentTarget.parentNode.children[index].classList.remove("active");
+        }
+        e.currentTarget.classList.add("active");
+    };
+
         return(
-                <TableRow className={classes.root}  onClick={() =>{
-                    handleYourChatConf();
-                }
-                }>
-                    <TableCell component="th" scope="row" style={style}>
-                        {row}
-                    </TableCell>
-{/*                    <th style={style}>{row.firstName}</TableCell>
-                    <TableCell style={style}>{row.secondName}</TableCell>
-                    <TableCell style={style}>{row.email}</TableCell>
-                    <TableCell style={style}>{row.phoneNumber}</TableCell>
-                    <TableCell style={style}>{row.companyName}</TableCell>
-                    <TableCell style={style}>{row.companyPhoneNumber}</TableCell>*/}
-                </TableRow>
+        <div
+            style={{ animationDelay: `0.${row.aDelay}s` }}
+            onClick={(e) =>{selectChat(e);
+                handleYourChatConf();
+            }}
+            className={`chatlistItem ${
+                    row.active ? row.active : ""
+            } `}
+    >
+        <div className="userMeta">
+            <p>{row}</p>
+        </div>
+    </div>
         );
 }
     async function getYourChatList(){
@@ -121,12 +136,11 @@ export default function ChatList() {
     console.log(users)
 
     return (
-            <div>
+            <div className={'mainChatlist'}>
                 <div>
                     <Autocomplete
                            options={accounts}
                            inputValue={searchInput}
-                        //   style={{width: 300}}
                            onChange={(event, value) => {
                                setSearchInput(value as string ?? '')
                            }}
@@ -136,10 +150,11 @@ export default function ChatList() {
                            )}
                     />
                 </div>
-                <table>
-                    <tr>Rozmowy</tr>
+                <table className={'mainChatlistTable'}>
+                    <tr style={{fontSize: 25, fontWeight: "bold" }}>Użytkownicy:</tr>
                     {search(users.map((user, index) => (
-                            <Row key={index} row={user} style={{
+                            <Row key={index} row={user}
+                                 style={{
                                 backgroundColor:  `var(--${'dark-light'}`,
                                 color: `var(--${'white'}`
                             }} onChange={getYourChatLista}/>

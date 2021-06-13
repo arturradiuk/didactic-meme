@@ -1,6 +1,11 @@
 .mainChatlist {
   border-right: 1px solid #ebe7fb;
-  padding: 0 40px 0 0px;
+    width: 20%;
+
+}
+.mainChatlistTable {
+    width: 100%;
+    text-align: center;
 }
 .chatlistHeading {
   display: flex;
@@ -91,11 +96,13 @@
 }
 
 .chatlistItem .userMeta p {
+    text-align: center;
   margin: 0;
   padding: 0;
   color: #000000;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 18px;
+
 }
 .chatlistItem .userMeta span {
   margin: 0;
@@ -104,6 +111,14 @@
   font-weight: 400;
   font-size: 12px;
   display: block;
+}
+.chatlistItem .userMeta span {
+    margin: 0;
+    padding: 0;
+    color: #1b5a1c;
+    font-weight: 400;
+    font-size: 12px;
+    display: block;
 }
 .chatlistItem:hover,
 .chatlistItem.active {
