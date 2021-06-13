@@ -1,4 +1,4 @@
-import React, {createRef, useEffect, useState} from "react";
+import React, {createRef, useState} from "react";
 import SpeechRecognition, {useSpeechRecognition} from "react-speech-recognition";
 
 import "./ChatContent.css";
@@ -11,15 +11,15 @@ export default function ChatContent(props) {
     const messagesEndRef = createRef(null);
     const [, updateState] = React.useState();
     const forceUpdate = React.useCallback(() => updateState({}), []);
-    const [selectedLanguage, setSelectedLanguage] = useState('pl') // en-UK
-    const [selectedLanguageString, setSelectedLanguageString] = useState('PL') // en-UK
+    const [selectedLanguage, setSelectedLanguage] = useState('pl'); // en-UK
+    const [selectedLanguageString, setSelectedLanguageString] = useState('PL'); // en-UK
 
     const commands = [
         {
             command: ["*Clear chat*", "*Wyczyść czat*"],
             callback: () => {
                 console.log("Clearing the chat");
-                transcript = ""
+                transcript = "";
                 setChat({chat: chat.chat, msg: ''});
                 console.log(`Transcript: ${transcript}`);
                 console.log(`Chat: ${chat.msg}`);
@@ -28,47 +28,47 @@ export default function ChatContent(props) {
         {
             command: ["*Wyślij", "*Send"],
             callback: () => {
-                document.getElementById("sendMsgBtn").click()
+                document.getElementById("sendMsgBtn").click();
             }
         }
-    ]
+    ];
 
-    let { transcript, resetTranscript } = useSpeechRecognition({commands})
+    let {transcript, resetTranscript} = useSpeechRecognition({commands});
 
     const startListening = () => {
-        console.log("Start listening")
+        console.log("Start listening");
         console.log(`Transcript: ${transcript}`);
         console.log(`Chat: ${chat.msg}`);
         if (chat.msg === "") {
-            resetTranscript()
-            forceUpdate()
+            resetTranscript();
+            forceUpdate();
         }
         SpeechRecognition.startListening({
             language: selectedLanguage,
             continuous: true
         });
-        if (!(transcript.toLowerCase().includes("wyślij") || transcript.toLowerCase().includes("send"))) {
-            chat.msg = transcript
+        if (!(transcript.toLowerCase().includes("Wyślij") || transcript.toLowerCase().includes("send")
+            || transcript.toLowerCase().includes("wyczyść czat") || transcript.toLowerCase().includes("clear chat"))) {
+            chat.msg = transcript;
         }
     };
     const stopListening = () => {
-        console.log("Stop listening")
+        console.log("Stop listening");
         SpeechRecognition.stopListening({
             language: selectedLanguage,
             continuous: true
         });
-        chat.msg = transcript
+        chat.msg = transcript;
         if (!(transcript.toLowerCase().includes("wyślij") || transcript.toLowerCase().includes("send"))) {
-            chat.msg = transcript
+            chat.msg = transcript;
         }
-    }
+    };
 
 
     const [chat, setChat] = useState({
         chat: [],
         msg: "",
     });
-
 
 
     const scrollToBottom = () => {
@@ -113,20 +113,20 @@ export default function ChatContent(props) {
 
     const changeLanguage = () => {
         if (selectedLanguage === 'pl') {
-            setSelectedLanguage('en-UK')
-            setSelectedLanguageString("EN")
+            setSelectedLanguage('en-UK');
+            setSelectedLanguageString("EN");
         } else {
-            setSelectedLanguage('pl')
-            setSelectedLanguageString("PL")
+            setSelectedLanguage('pl');
+            setSelectedLanguageString("PL");
         }
         console.log(`Language changed to ${selectedLanguage}`);
         console.log(`Language changed to ${selectedLanguageString}`);
-        forceUpdate()
-    }
+        forceUpdate();
+    };
 
     const customOnSubmit = async (e) => {
-        console.log(e)
-        e.preventDefault()
+        console.log(e);
+        e.preventDefault();
         await loadMessages(chat.chat);
         // if ( this.state.msg != "" ) {
         if (chat.msg !== "") {
@@ -158,11 +158,13 @@ export default function ChatContent(props) {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
             });
-            console.log("reset " + transcript)
-            transcript = ""
-            resetTranscript()
-            { resetTranscript() }
-            console.log("after " + transcript)
+            console.log("reset " + transcript);
+            transcript = "";
+            resetTranscript();
+            {
+                resetTranscript();
+            }
+            console.log("after " + transcript);
             setChat({chat: chat.chat, msg: ''});
             forceUpdate();
         }

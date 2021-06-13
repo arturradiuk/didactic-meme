@@ -1,16 +1,59 @@
-import React from "react";
-import {Link} from 'react-router-dom';
+import React, {useState} from "react";
+import {Link, Redirect} from 'react-router-dom';
 import "./navigation.css";
 import logo from "./../images/logo2.png";
 import settings from "./../images/settings.png";
 import chat from "./../images/czat.png";
 import profile from "./../images/prifile.png";
 import info from "./../images/info.png";
+import SpeechRecognition, {useSpeechRecognition} from "react-speech-recognition";
 
 export default function Navigation() {
+    const [redirectUrl, setRedirectUrl] = useState("");
+    const commands = [
+        {
+            command: ["Go to *", "Open *"],
+            callback: (redirectPage) => {
+                console.log(`Trying to redirected to ${redirectPage}`)
+                setRedirectUrl(redirectPage)
+            }
+        }
+    ];
+
+    const pages = ["chat", "profile", "settings", "info"]
+    const urls = {
+        chat: "/chat",
+        profile: "/profile",
+        settings:"/settings",
+        info: "/info"
+    }
+    let redirect = ""
+    if (redirectUrl) {
+        if (pages.includes(redirectUrl)) {
+            console.log(`Redirecting to ${redirectUrl}`)
+            redirect = <Redirect to={urls[redirectUrl]} />;
+        }
+    }
+
+    let { transcript, resetTranscript } = useSpeechRecognition({commands})
+
+    const startListening = () => {
+        console.log("Start listening")
+        SpeechRecognition.startListening({
+            language: 'en-UK',
+            continuous: true
+        });
+    };
+    const stopListening = () => {
+        console.log("Stop listening")
+        SpeechRecognition.stopListening();
+    }
+
     return (
       <div className="navigation">
-        <div className="navigationI">
+        <div className="navigationI"
+             onMouseDown={startListening}
+             onMouseUp={stopListening}>
           <img src={logo}/>
         </div>
         <div className="navigationBlocks">
@@ -33,6 +76,7 @@ export default function Navigation() {
               <img src={info}/>
               </Link>
           </div>
+          {redirect}
       </div>
     );
   }
