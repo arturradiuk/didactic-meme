@@ -34,6 +34,10 @@ public class UserService {
         return this.userRepository.findByUserName(name).get();
     }
 
+    public UserEnt changeName(String name) {
+        return this.userRepository.;
+    }
+
     public List<String> getAllOtherUsernames(String currentUserEmail) {
         UserEnt currentUser = userRepository.findByEmail(currentUserEmail).get();
         return userRepository.findAll().stream()

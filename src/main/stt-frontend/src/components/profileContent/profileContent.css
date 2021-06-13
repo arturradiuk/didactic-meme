@@ -9,16 +9,16 @@
     margin-left: auto;
     margin-right: auto;
 }
-div.c {
+.mainProfilecontent div.c {
     text-align: center;
 }
-h1 {
+.mainProfilecontent div h1 {
     font-weight: bold;
     color: #fff;
     font-size: 45px;
 }
 
-h2 {
+.mainProfilecontent div h2 {
     color: #f64242;
     font-size: 35px;
 }

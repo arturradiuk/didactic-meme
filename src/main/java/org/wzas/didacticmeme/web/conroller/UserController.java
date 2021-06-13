@@ -37,4 +37,9 @@ public class UserController {
         UserEnt userData = userService.findUserByName(principal.getName());
         return ResponseEntity.ok(userData);
     }
+
+    @GetMapping("/_self/profile/editName")
+    public UserEnt chengeUserName(Principal principal) {
+        return userService.se
+
 }
