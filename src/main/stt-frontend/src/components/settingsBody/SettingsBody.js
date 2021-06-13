@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./settingsBody.css";
-import SettingsContent from "../settingsContent/SettingsContent";
+import SettingsContent from "../settingsContent/SettingsContent.tsx";
 
 export default class SettingsBody extends Component {
   render() {
