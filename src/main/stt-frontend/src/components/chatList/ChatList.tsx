@@ -66,7 +66,7 @@ function Row(this: any, props: RowProps) {
             } `}
     >
         <div className="userMeta">
-            <p>{row}</p>
+            <p>{row.userName}</p>
         </div>
     </div>
         );

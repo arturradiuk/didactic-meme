@@ -3,6 +3,7 @@ package org.wzas.didacticmeme.web.conroller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.wzas.didacticmeme.dto.ChatNameDto;
 import org.wzas.didacticmeme.model.UserEnt;
 import org.wzas.didacticmeme.service.UserService;
 
@@ -25,8 +26,8 @@ public class UserController {
     }
 
     @GetMapping("/_self/chat-names")
-    public ResponseEntity<List<String>> getAllUserNamesList(Principal principal) {
-        List<String> allUsernames = userService.getAllOtherUsernames(principal.getName());
+    public ResponseEntity<List<ChatNameDto>> getAllChatNames(Principal principal) {
+        List<ChatNameDto> allUsernames = userService.getAllChatNames(principal.getName());
         return ResponseEntity.ok(allUsernames);
     }
 

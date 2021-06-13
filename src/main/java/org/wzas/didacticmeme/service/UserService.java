@@ -2,6 +2,7 @@ package org.wzas.didacticmeme.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.wzas.didacticmeme.dto.ChatNameDto;
 import org.wzas.didacticmeme.model.UserEnt;
 import org.wzas.didacticmeme.model.auth.AuthRequest;
 import org.wzas.didacticmeme.repository.UserRepository;
