@@ -34,6 +34,13 @@ public class UserService {
         return this.userRepository.findByUserName(name).get();
     }
 
+    public UserEnt changeEmail(String userName, String newEmail) {
+        UserEnt currentUser = userRepository.findByUserName(userName).get();
+        currentUser.setEmail(newEmail);
+        userRepository.saveAndFlush(currentUser);
+        return currentUser;
+    }
+
     public List<String> getAllOtherUsernames(String currentUserName) {
         return userRepository.findAll().stream()
                 .map(UserEnt::getUserName)
