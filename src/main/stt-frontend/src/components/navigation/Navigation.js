@@ -10,8 +10,7 @@ import Profile from "../ProfileApp";
 import Settings from "../SettingsApp";
 import Info from "../InfoApp";
 
-export default class Navigation extends Component {
-  render() {
+export default function Navigation() {
     return (
       <div className="navigation">
         <div className="navigationI">
@@ -40,4 +39,4 @@ export default class Navigation extends Component {
       </div>
     );
   }
-}
+

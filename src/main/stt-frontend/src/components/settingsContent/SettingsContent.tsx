@@ -22,14 +22,15 @@ interface DataProps {
 }
 export default function SettingsContent() {
 
+    const [userEmail, setUserEmail] = useState('');
+    const [userName, setUserName] = useState('');
+
     const changeName = async () => {
-        const {token} = JSON.parse(sessionStorage.getItem('token') as string)
+        const token = (localStorage.getItem('token') as string)
+
         const json = JSON.stringify({
-            name: userName,
-
+            name: userName
         })
-
-
         await axios.put("http://localhost:8080/api/users/_self/profile/editName", json, {
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -38,7 +39,16 @@ export default function SettingsContent() {
         loadUser();
     }
 
+    const changEmail = async () => {
+        const token = (localStorage.getItem('token') as string)
 
+        await axios.put(`http://localhost:8080/api/users/_self/profile/editEmail/${userEmail}`, {}, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+        loadUser();
+    }
 
     function loadUser() {
         const User = JSON.parse(sessionStorage.getItem('currentUser') as string)
@@ -50,16 +60,17 @@ export default function SettingsContent() {
         })
     }
 
+    console.log(userName);
+    console.log(userEmail);
+    console.log((localStorage.getItem('token') as string));
 
-
-    const [userEmail, setUserEmail] = useState([]);
-    const [userName, setUserName] = useState([]);
 
     useEffect(() => {
         loadUser().then(res => {
             sessionStorage.setItem("User", JSON.stringify(res.data));
             setUserEmail(res.data.email);
             setUserName(res.data.userName);
+
         })
     }, []);
 
@@ -71,24 +82,17 @@ export default function SettingsContent() {
             <div className="c">
                 <h1>Użytkownik:</h1>
                 <h2>{userName}</h2><br></br>
-                <input type="Text"
-                 placeholder='Zmień Nazwe'
-                           value={userName}
-                           onChange={e => {
-                               setUserName(e.target.value)
-                           }}
-                />
-                <Button onClick={}>Zmień Nazwę</Button><br></br>
                 <h1>Email:</h1>
                 <h2>{userEmail}</h2><br></br>
-                <input type="Text"
+                <h1>Zmiana E-maila:</h1><br></br>
+                <TextField type="Text"
                            placeholder='Zmień Email'
                            value={userEmail}
                            onChange={event => {
                                setUserEmail(event.target.value)
                            }}
-                />
-                <Button onClick={}>Zmień Email</Button>
+                /><br></br>
+                <Button onClick={changEmail}>Zmień Email</Button>
             </div>
         </div>
     );

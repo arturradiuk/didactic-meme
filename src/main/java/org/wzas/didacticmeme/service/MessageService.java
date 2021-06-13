@@ -19,16 +19,16 @@ public class MessageService {
     @Autowired
     private MessageRepository messageRepository;
 
-    public List<MessageEnt> findAllSentMessagesForTheEmail(String email) {
-        UserEnt user = userRepository.findByEmail(email).get();
+    public List<MessageEnt> findAllSentMessagesForUserName(String name) {
+        UserEnt user = userRepository.findByUserName(name).get();
         return messageRepository.findAllBySenderId(user.getId()).stream().map(messageEnt -> { // to hide read status
             messageEnt.setRead(null);
             return messageEnt;
         }).collect(Collectors.toList());
     }
 
-    public List<MessageEnt> findAllReceivedMessagesForTheEmail(String email) {
-        UserEnt user = userRepository.findByEmail(email).get();
+    public List<MessageEnt> findAllReceivedMessagesForUserName(String name) {
+        UserEnt user = userRepository.findByUserName(name).get();
         return messageRepository.findAllByReceiverId(user.getId());
     }
 

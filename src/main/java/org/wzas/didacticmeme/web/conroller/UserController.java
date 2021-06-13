@@ -2,9 +2,7 @@ package org.wzas.didacticmeme.web.conroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.wzas.didacticmeme.model.UserEnt;
 import org.wzas.didacticmeme.service.UserService;
 
@@ -38,8 +36,9 @@ public class UserController {
         return ResponseEntity.ok(userData);
     }
 
-    @GetMapping("/_self/profile/editName")
-    public UserEnt chengeUserName(Principal principal) {
-        return userService.se
+    @PutMapping("/_self/profile/editEmail/{newEmail}")
+    public UserEnt changeEmail(Principal principal, @PathVariable("newEmail") String newEmail) {
+        return userService.changeEmail(principal.getName(), newEmail);
+    }
 
 }

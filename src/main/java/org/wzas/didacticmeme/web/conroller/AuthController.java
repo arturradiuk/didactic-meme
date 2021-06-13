@@ -50,7 +50,7 @@ public class AuthController {
 //        UserEnt user = repository.getUserByEmailAndPassword(request.getLogin(), request.getPassword()).get();
 //        UserEnt user = userRepository.findByEmailAndPassword(request.getLogin(), request.getPassword()).get(); //todo get
             UserEnt user = userService.findUser(request); //todo get
-            String token = jwtProvider.generateToken(user.getEmail());
+            String token = jwtProvider.generateToken(user.getUserName());
             return ResponseEntity.accepted().body(token);
         } catch (Exception e) {
             return new ResponseEntity<>("No valid credentials found", HttpStatus.NOT_FOUND);
