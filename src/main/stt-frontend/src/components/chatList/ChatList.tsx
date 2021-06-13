@@ -18,11 +18,13 @@ function createData(
         userName: string,
         active: boolean,
         aDelay: number,
+        avatar: string,
 ) {
     return {
         userName: userName,
         active:active,
         aDelay: aDelay,
+        avatar: avatar,
     };
 }
 
@@ -121,7 +123,7 @@ export default function ChatList() {
         console.log(rows)
         if (Array.isArray(rows) && rows.length) {
             const filteredAccount = rows.filter(
-                    row => row.props.row.toLowerCase().indexOf(searchInput.toLowerCase()) > -1
+                    row => row.props.row.userName.toLowerCase().indexOf(searchInput.toLowerCase()) > -1
             );
 
             filteredAccount.forEach(account => (accounts.includes(account.props.row) ?
@@ -133,7 +135,6 @@ export default function ChatList() {
     }
 
     const accounts: String[] = [];
-    console.log(users)
 
     return (
             <div className={'mainChatlist'}>

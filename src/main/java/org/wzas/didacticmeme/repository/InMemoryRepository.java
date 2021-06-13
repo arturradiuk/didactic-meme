@@ -23,8 +23,8 @@ public class InMemoryRepository {
         userEnts = new ArrayList<>();
         messageEnts = new ArrayList<>();
 
-        userEnts.add(new UserEnt(0L, "tola@gmail.com", "123456", "tola", AccessLevel.ROLE_USER));
-        userEnts.add(new UserEnt(1L, "bob@gmail.com", "123456", "bob", AccessLevel.ROLE_USER));
+        userEnts.add(new UserEnt(0L, "tola@gmail.com", "123456", "tola", AccessLevel.ROLE_USER, null));
+        userEnts.add(new UserEnt(1L, "bob@gmail.com", "123456", "bob", AccessLevel.ROLE_USER, null));
 
         messageEnts.add(new MessageEnt(0L, UUID.randomUUID(), userEnts.get(1), userEnts.get(0), "Hello Tola", LocalDateTime.now(), true));
         messageEnts.add(new MessageEnt(1L, UUID.randomUUID(), userEnts.get(0), userEnts.get(1), "Hello Bob", LocalDateTime.now(), true));

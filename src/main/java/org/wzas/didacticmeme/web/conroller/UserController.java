@@ -41,4 +41,9 @@ public class UserController {
         return userService.changeEmail(principal.getName(), newEmail);
     }
 
+    @GetMapping("/chat-avatar/{login}")
+    public ResponseEntity<String> getUserAvatar(@PathVariable("login") String name) {
+        String userAvatar = userService.findUserByName(name).getAvatar();
+        return ResponseEntity.ok(userAvatar);
+    }
 }

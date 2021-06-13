@@ -9,7 +9,7 @@
 .navigation img {
   display: block;
   max-width: 100%;
-  cursor: pointer;
+    cursor: default;
 }
 .navigationI img {
     display: block;

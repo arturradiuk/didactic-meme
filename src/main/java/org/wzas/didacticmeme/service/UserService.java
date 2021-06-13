@@ -48,4 +48,10 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    public List<ChatNameDto> getAllChatNames(String currentUserName) {
+        return userRepository.findAll().stream()
+                .filter(userEnt -> !userEnt.getUserName().equals(currentUserName))
+                .map(userEnt -> new ChatNameDto(userEnt.getUserName(), userEnt.getAvatar()))
+                .collect(Collectors.toList());
+    }
 }
