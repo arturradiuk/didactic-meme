@@ -30,6 +30,7 @@ public class UserEnt { // todo unique constraints
     @Column(name = "access_level")
     private AccessLevel accessLevel = AccessLevel.ROLE_USER;
 
+    private String avatar;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -4,6 +4,8 @@ import axios from "axios";
 
 export class SignIn extends React.Component {
 
+
+
     constructor(props) {
         super(props);
         this.state = {
@@ -37,6 +39,28 @@ export class SignIn extends React.Component {
         })
     }
 
+    async getAvatars() {
+        return axios.get('http://localhost:8080/api/users/chat-avatar/chat-avatars', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        }).then(res => {
+            const avatar_json = {}
+            res.data.forEach((json: any) => {
+                console.log('json:')
+                console.log(json)
+                avatar_json[json.userName] = json.avatar;
+                console.log('avatar json:')
+                console.log(avatar_json);
+            });
+
+            console.log('array:')
+            console.log(avatar_json);
+            sessionStorage.setItem('avatars', JSON.stringify(avatar_json));
+            return avatar_json;
+    });
+}
+
     async loginRequest() {
         const json = {
             "login": this.state.login,
@@ -57,7 +81,7 @@ export class SignIn extends React.Component {
             for (const inputElement of document.getElementsByTagName('input')) {
                 inputElement.value = ""
             }
-        });
+        }).then(this.getAvatars());
     }
 
     render() {

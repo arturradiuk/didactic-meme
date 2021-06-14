@@ -14,5 +14,5 @@
 .navigationI img {
     display: block;
     max-width: 100%;
-    cursor: default;
+    cursor: pointer;
 }

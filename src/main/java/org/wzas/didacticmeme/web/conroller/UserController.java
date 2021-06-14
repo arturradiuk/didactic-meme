@@ -3,6 +3,7 @@ package org.wzas.didacticmeme.web.conroller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.wzas.didacticmeme.dto.ChatNameDto;
 import org.wzas.didacticmeme.model.UserEnt;
 import org.wzas.didacticmeme.service.UserService;
 
@@ -41,4 +42,15 @@ public class UserController {
         return userService.changeEmail(principal.getName(), newEmail);
     }
 
+    @GetMapping("/chat-avatar/{login}")
+    public ResponseEntity<String> getUserAvatar(@PathVariable("login") String name) {
+        String userAvatar = userService.findUserByName(name).getAvatar();
+        return ResponseEntity.ok(userAvatar);
+    }
+
+    @GetMapping("/chat-avatar/chat-avatars")
+    public ResponseEntity<List<ChatNameDto>> getAllChatNames() {
+        List<ChatNameDto> allUsernames = userService.getAllChatAvatars();
+        return ResponseEntity.ok(allUsernames);
+    }
 }

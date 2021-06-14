@@ -188,7 +188,7 @@ export default function ChatContent(props) {
                     <div className="currentChattingUser">
                         <Avatar
                             isOnline="active"
-                            image="https://lirp.cdn-website.com/f95a9d1b/dms3rep/multi/opt/BlankProfilePic-494w.png"
+                            image={JSON.parse(sessionStorage.getItem('avatars'))[JSON.parse(sessionStorage.getItem('chatConf'))]}
                         />
                         <p>{JSON.parse(sessionStorage.getItem('chatConf'))}</p>
                     </div>
