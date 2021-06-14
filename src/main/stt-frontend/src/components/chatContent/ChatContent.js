@@ -78,6 +78,7 @@ export default function ChatContent(props) {
     const loadMessages = async (chatItems) => {
         const initialSize = chatItems.length;
         let scrollDown = false;
+        const currentUser = localStorage.getItem('currentUser');
         const chatUser = JSON.parse(sessionStorage.getItem('chatConf'));
         // console.log(chatUser);
         await axios.get(`http://localhost:8080/api/messages/exchanged/_self/${chatUser}`, {
@@ -87,9 +88,10 @@ export default function ChatContent(props) {
         }).then(response => {
             chatItems.length = 0;
             for (const dataElement of response.data) {
+                const type = dataElement.sender.userName === currentUser ? "" : "other";
                 chatItems.push({
-                    image: "",
-                    type: dataElement.sender.userName === localStorage.getItem('currentUser') ? "" : "other",
+                    image: JSON.parse(sessionStorage.getItem('avatars'))[type === "" ? currentUser : chatUser],
+                    type: type,
                     msg: dataElement.content,
                     time: dataElement.sentTime
                 });
@@ -108,7 +110,7 @@ export default function ChatContent(props) {
         if (scrollDown) {
             scrollToBottom();
         }
-        setTimeout(() => loadMessages(chatItems), 1500);
+        setTimeout(() => loadMessages(chatItems), 1000);
     };
 
     const changeLanguage = () => {

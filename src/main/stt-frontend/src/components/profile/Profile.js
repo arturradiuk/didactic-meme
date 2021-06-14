@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import "./profile.css";
 
 export default class Profile extends Component {
