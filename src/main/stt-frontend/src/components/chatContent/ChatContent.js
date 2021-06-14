@@ -1,4 +1,4 @@
-import React, {createRef, useState} from "react";
+import React, {createRef, useEffect, useState} from "react";
 import SpeechRecognition, {useSpeechRecognition} from "react-speech-recognition";
 
 import "./ChatContent.css";
@@ -171,9 +171,9 @@ export default function ChatContent(props) {
         // scrollToBottom();
     };
 
-    // useEffect(() => {
-    //     customOnSubmit();
-    // }, [chat]);
+    useEffect(async () => {
+        await loadMessages(chat.chat);
+    }, []);
 
     const onStateChange = (e) => {
         console.log("Hi I'm here");
