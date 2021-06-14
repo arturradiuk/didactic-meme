@@ -22,7 +22,7 @@ function createData(
 ) {
     return {
         userName: userName,
-        active:active,
+        active: active,
         aDelay: aDelay,
         avatar: avatar,
     };
@@ -30,8 +30,8 @@ function createData(
 
 export interface RowProps {
     row: ReturnType<typeof createData>,
-        style: React.CSSProperties,
-        onChange: () => Promise<any>,
+    style: React.CSSProperties,
+    onChange: () => Promise<any>,
 }
 
 function Row(this: any, props: RowProps) {
@@ -41,7 +41,7 @@ function Row(this: any, props: RowProps) {
     const classes = useRowStyles();
 
     const handleYourChatConf = async () => {
-            sessionStorage.setItem("chatConf", JSON.stringify(row));
+        sessionStorage.setItem("chatConf", JSON.stringify(row));
     }
 
     const selectChat = (e: any) => {
@@ -55,42 +55,44 @@ function Row(this: any, props: RowProps) {
         e.currentTarget.classList.add("active");
     };
 
-        return(
-        <div
-            style={{ animationDelay: `0.${row.aDelay}s` }}
-            onClick={(e) =>{selectChat(e);
-                handleYourChatConf();
-            }}
-            className={`chatlistItem ${
-                    row.active ? row.active : ""
-            } `}
-    >
-        <div className="userMeta">
-            <p>{row.userName}</p>
-        </div>
-    </div>
-        );
+    return (
+            <div
+                    style={{animationDelay: `0.${row.aDelay}s`}}
+                    onClick={(e) => {
+                        selectChat(e);
+                        handleYourChatConf();
+                    }}
+                    className={`chatlistItem ${
+                            row.active ? row.active : ""
+                    } `}
+            >
+                <div className="userMeta">
+                    <p>{row.userName}</p>
+                </div>
+            </div>
+    );
 }
-    async function getYourChatList(){
 
-        const token = localStorage.getItem('token');
+async function getYourChatList() {
 
-        return await axios.get(`http://localhost:8080/api/users/_self/chat-names`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-    }
+    const token = localStorage.getItem('token');
 
-    function getYourChatConf(row: string){
-        const token = localStorage.getItem('token');
+    return await axios.get(`http://localhost:8080/api/users/_self/chat-names`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
 
-        return axios.get(`http://localhost:3000/Chat/Conf`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-    }
+function getYourChatConf(row: string) {
+    const token = localStorage.getItem('token');
+
+    return axios.get(`http://localhost:3000/Chat/Conf`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+}
 
 
 export default function ChatList() {
@@ -108,7 +110,7 @@ export default function ChatList() {
     const getYourChatLista = () => {
         return getYourChatList().then(res => {
             setUsers(res.data)
-    })
+        })
     }
 
     useEffect(() => {
@@ -122,6 +124,7 @@ export default function ChatList() {
     function search(rows: any[]) {
         console.log(rows)
         if (Array.isArray(rows) && rows.length) {
+            console.log(rows[0].props.row)
             const filteredAccount = rows.filter(
                     row => row.props.row.userName.toLowerCase().indexOf(searchInput.toLowerCase()) > -1
             );
@@ -140,25 +143,25 @@ export default function ChatList() {
             <div className={'mainChatlist'}>
                 <div>
                     <Autocomplete
-                           options={accounts}
-                           inputValue={searchInput}
-                           onChange={(event, value) => {
-                               setSearchInput(value as string ?? '')
-                           }}
-                           renderInput={(params) => (
-                                   <TextField {...params} label='search account' variant="outlined"
-                                         onChange={(e) => setSearchInput(e.target.value)}/>
-                           )}
+                            options={accounts}
+                            inputValue={searchInput}
+                            onChange={(event, value) => {
+                                setSearchInput(value as string ?? '')
+                            }}
+                            renderInput={(params) => (
+                                    <TextField {...params} label='search account' variant="outlined"
+                                               onChange={(e) => setSearchInput(e.target.value)}/>
+                            )}
                     />
                 </div>
                 <table className={'mainChatlistTable'}>
-                    <tr style={{fontSize: 25, fontWeight: "bold" }}>Użytkownicy:</tr>
+                    <tr style={{fontSize: 25, fontWeight: "bold"}}>Użytkownicy:</tr>
                     {search(users.map((user, index) => (
                             <Row key={index} row={user}
                                  style={{
-                                backgroundColor:  `var(--${'dark-light'}`,
-                                color: `var(--${'white'}`
-                            }} onChange={getYourChatLista}/>
+                                     backgroundColor: `var(--${'dark-light'}`,
+                                     color: `var(--${'white'}`
+                                 }} onChange={getYourChatLista}/>
                     )))}
                 </table>
             </div>

@@ -208,7 +208,7 @@ export default function ChatContent(props) {
                 <div className="chat__items">
                     {
                         chat.chat.map((itm, index) => {
-                   // console.log(JSON.parse(sessionStorage.getItem("chatConf")));
+                            // console.log(JSON.parse(sessionStorage.getItem("chatConf")));
                             const time = new Date(Date.parse(itm.time));
                             const timeString = `${time.getHours()}:${time.getMinutes()}`;
                             return (
@@ -216,8 +216,8 @@ export default function ChatContent(props) {
                                     animationDelay={index + 2}
                                     user={itm.type ? itm.type : "me"}
                                     msg={itm.msg}
-                                  //  image={JSON.parse(sessionStorage.getItem('chatConf')).avatar}
-                                    image = {itm.image}
+                                    //  image={JSON.parse(sessionStorage.getItem('chatConf')).avatar}
+                                    image={itm.image}
                                     time={timeString}
                                 />
                             );
